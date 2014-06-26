@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- HandlerMapping -->
+	<bean id="handlerMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<value>
+			<!-- 관리자 상품  -->
+			/AdminGoodsList.do=admingoodsAction
+			/AdminGoodsAdd.do=admingoodsAction
+			/AdminGoodsAddOk.do=admingoodsAction
+			/AdminGoodsDelete.do=admingoodsAction
+			/AdminGoodsDeleteOk.do=admingoodsAction
+			/AdminGoodsModify.do=admingoodsAction
+			/AdminGoodsModifyOk.do=admingoodsAction
+			
+			
+			<!-- 장바구니 -->
+			/BasketAdd.do=basketAction
+			/BasketList.do=basketAction
+			/BasketDel.do=basketAction
+
+
+            <!-- 사용자 상품 -->
+			/GoodsList.do=goodsAction
+			/GoodsAdd.do=goodsAction
+			/GoogsDelete.do=goodsAction
+			/GoodsModify.do=goodsAction
+			/GoodsModifyOk.do=goodsAction
+			/GoodsDetail.do=goodsAction
+			
+			<!-- 회원관리 -->
+			/MemberLogin.do=memberAction
+			/MemberLoginOk.do=memberAction
+			/MemberJoin.do=memberAction
+			/memberJoinOk.do=memberAction
+			/MemberIDCheckAction.do=memberAction
+			/Zipcode.do=memberAction
+			/MemberZipcodeAction.do=memberAction
+			/MemberFind.do=memberAction
+			/MemberFindOk.do=memberAction
+			
+			
+			<!-- 주문관리 -->
+			/OrderStart.do=orderAction
+			/OrderList.do=orderAction
+			/OrderAdd.do=orderAction
+
+			</value>
+		</property>
+	</bean>
+
+	<!-- Controller -->
+	<bean id="admingoodsAction" class="com.naver.action.AdminGoodsAction" p:admingoodsService-ref="admingoodsService" />
+	<bean id="basketAction" class="com.naver.action.BasketAction" p:basketService-ref="basketService" />
+	<bean id="goodsAction" class="com.naver.action.GoodsAction"  p:goodsService-ref="goodsService" />
+	<bean id="memberAction" class="com.naver.action.MemberAction" p:memberService-ref="memberService" />
+	<bean id="orderAction" class="com.naver.action.OrderAction"  p:orderService-ref="orderService" />
+	<!-- 스프링 setter DI 의존관계를 설정하는 부분 -->
+
+	<!-- ViewResolver -->
+	<bean id="internalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>jsp/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+</beans>
+
+
