@@ -53,6 +53,15 @@
 	 <property name="sqlSession" ref="sqlSession" /> 
 	</bean>	
 
+    <!-- 우편번호 -->
+    <bean id="zipcodeService" class="com.naver.dao.ZipcodeDAOImpl">
+    <property name="sqlSession" ref="sqlSession" />
+    </bean>
+    
+    <!-- 전화국번/메일도메인 -->
+    <bean id="phonemailService" class="com.naver.dao.PhoneMailDAOImpl">
+    <property name="sqlSession" ref="sqlSession" />
+    </bean>
 </beans>
 
 

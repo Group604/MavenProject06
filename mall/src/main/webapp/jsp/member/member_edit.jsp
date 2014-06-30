@@ -14,7 +14,7 @@
 <body>
 	<div id="join_wrap">
 		<h2 class="join_title">회원가입</h2>
-		<form name="m" method="post" action="member_edit_ok.do"
+		<form name="m" method="post" action="MemberEditOk.do"
 			onsubmit="return edit_check();">
 			<table id="join_t">
 				<tr>
@@ -23,57 +23,57 @@
 				</tr>
 				<tr>
 					<th>비밀번호</th>
-					<td><input type="password" name="join_pwd" id="join_pwd"
+					<td><input type="password" name="member_pwd" id="join_pwd"
 						size="14" class="box" /></td>
 				</tr>
 				<tr>
 					<th>비밀번호 확인</th>
-					<td><input type="password" name="join_pwd2" id="join_pwd2"
+					<td><input type="password" name="member_pwd2" id="join_pwd2"
 						size="14" class="box"  /></td>
 				</tr>
 				<tr>
 					<th>회원이름</th>
-					<td><input name="join_name" id="join_name" size="14"
-						class="box"  value="${em.join_name}"/></td>
+					<td><input name="member_name" id="join_name" size="14"
+						class="box"  value="${em.member_name}"/></td>
 				</tr>
 				<tr>
 					<th>우편번호</th>
 					<td>
-					<input name="join_zip" id="join_zip" size="3" maxlength="3" onclick="post_search();" value="${em.join_zip}"/>-
-					<input name="join_zip2"id="join_zip2" size="3" maxlength="3" class="box" onclick="post_search();" value="${em.join_zip2}" /> 
-					<input type="button" value="우편검색"class="input_b" onclick="post_check();" value="${em.join_addr}"/></td>
+					<input name="member_zip" id="join_zip" size="3" maxlength="3" onclick="post_search();" value="${em.member_zip}"/>-
+					<input name="member_zip2"id="join_zip2" size="3" maxlength="3" class="box" onclick="post_search();" value="${em.member_zip2}" /> 
+					<input type="button" value="우편검색"class="input_b" onclick="post_check();" value="${em.member_addr}"/></td>
 				</tr>
 				<tr>
 					<th>주소</th>
-					<td><input name="join_addr" id="join_addr" size="40"
+					<td><input name="member_addr" id="join_addr" size="40"
 						class="box" /></td>
 				</tr>
 				<tr>
 					<th>나머지 주소</th>
-					<td><input name="join_addr2" id="join_addr2" size="36"
+					<td><input name="member_addr2" id="join_addr2" size="36"
 						class="box" /></td>
 				</tr>
 				<tr>
 					<th>휴대폰</th>
-					<td><select name="join_phone01">
+					<td><select name="member_phone01">
 							<c:forEach var="p" items="${phone}">
-								<option value="${p}"
-								 <c:if test="${em.join_phone01 ==p}">
-								 ${'selected'}</c:if>>${p}</option>
+								<option value="${p.phone_number}"
+								 <c:if test="${em.member_phone01 ==p.phone_number}">
+								 ${'selected'}</c:if>>${p.phone_number}</option>
 							</c:forEach>
 							
-					</select>-<input name="join_phone02" id="join_phone02" siz4e="4"
-						maxlength="4" class="box" value="${em.join_phone02}"/>- <input name="join_phone03"
-						id="join_phone03" size="4" maxlength="4" class="box" value="${em.join_phone03}" /></td>
+					</select>-<input name="member_phone02" id="join_phone02" siz4e="4"
+						maxlength="4" class="box" value="${em.member_phone02}"/>- <input name="member_phone03"
+						id="join_phone03" size="4" maxlength="4" class="box" value="${em.member_phone03}" /></td>
 				</tr>
 				<tr>
 					<th>이메일</th>
-					<td><input name="mail_id" id="mail_id" size="14" class="box" value="${em.mail_id}"/>@
-					    <input name="mail_domain" id="mail_domain" size="12" class="box" value="${em.mail_domain}" readonly/>
+					<td><input name="member_emailid" id="mail_id" size="14" class="box" value="${em.member_emailid}"/>@
+					    <input name="member_emaildomain" id="mail_domain" size="12" class="box" value="${em.member_emaildomain}" readonly/>
 						<%-- 입력박스에 readonly 속성을 지정하면 읽기만 가능 --%>
 						 <select name="mail_list" onchange="domain_list();">
 							<c:forEach var="mail" items="${email}">
-	    <option value="${mail}"<c:if test="${em.mail_domain == mail}">${'selected'}</c:if>>${mail}</option>
+	    <option value="${mail.email_domain}"<c:if test="${em.member_emaildomain == mail.email_domain}">${'selected'}</c:if>>${mail.email_domain}</option>
 							</c:forEach>
 					</select></td>
 				</tr>
@@ -86,4 +86,4 @@
 		</form>
 	</div>
 </body>
-</html>
+</html> 

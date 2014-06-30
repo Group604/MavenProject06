@@ -41,3 +41,5 @@ insert into email values(3,'gmail.com');
 insert into email values(4,'nate.com');
 insert into email values(5,'korea.com');
 insert into email values(6,'직접입력');
+
+select * from member;

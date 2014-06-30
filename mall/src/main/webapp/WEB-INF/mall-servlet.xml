@@ -37,12 +37,23 @@
 			/MemberLogin.do=memberAction
 			/MemberLoginOk.do=memberAction
 			/MemberJoin.do=memberAction
-			/memberJoinOk.do=memberAction
+			/MemberJoinOk.do=memberAction
 			/MemberIDCheckAction.do=memberAction
 			/Zipcode.do=memberAction
+			/ZipFind.do=memberAction
+			/ZipFindOk.do=memberAction
 			/MemberZipcodeAction.do=memberAction
 			/MemberFind.do=memberAction
 			/MemberFindOk.do=memberAction
+			/PwdFind.do=memberAction
+			/PwdFindOk.do=memberAction
+			/JoinIDCheck.do=memberAction
+			/MemberLogout.do=memberAction
+			/Index.do=memberAction
+			/MemberEdit.do=memberAction
+			/MemberEditOk.do=memberAction
+			/MemberDel.do=memberAction
+			/MemberDelOk.do=memberAction
 			
 			
 			<!-- 주문관리 -->
@@ -58,7 +69,7 @@
 	<bean id="admingoodsAction" class="com.naver.action.AdminGoodsAction" p:admingoodsService-ref="admingoodsService" />
 	<bean id="basketAction" class="com.naver.action.BasketAction" p:basketService-ref="basketService" />
 	<bean id="goodsAction" class="com.naver.action.GoodsAction"  p:goodsService-ref="goodsService" />
-	<bean id="memberAction" class="com.naver.action.MemberAction" p:memberService-ref="memberService" />
+	<bean id="memberAction" class="com.naver.action.MemberAction" p:memberService-ref="memberService" p:phonemailService-ref="phonemailService" />
 	<bean id="orderAction" class="com.naver.action.OrderAction"  p:orderService-ref="orderService" />
 	<!-- 스프링 setter DI 의존관계를 설정하는 부분 -->
 

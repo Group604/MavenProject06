@@ -1,12 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- JSTL 태그라이브러리 -->
-<%
-//String zipcode,addr,addr2;
-//String dong = (String)request.getAttribute("dong"); 
-//List zipcodeList = (ArrayList)request.getAttribute("zipcodelist");
-%>
+
 <html>
 <head>
 <title>우편번호 검색</title>
@@ -71,7 +66,7 @@ INPUT,SELECT{font-family: Dotum;font-size:9pt;;}
 </style>
 </head>
 <body onload="postform.dong.focus();" bgcolor="#FFFFFF" topmargin="0" leftmargin="0">
-<form method="post" action="zip_find_ok.do" name="postform" onsubmit="return check(this)">
+<form method="post" action="ZipFindOk.do" name="postform" onsubmit="return check(this)">
 <table width="414" height="100" border="0" align="center" cellpadding="0" cellspacing="0">
  <tr> 
   <td bgcolor="#999999" align="center"><input type="image" src="images/ZipCode_img01.gif" width="413" height="58"></td>

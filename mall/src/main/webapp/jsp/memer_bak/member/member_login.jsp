@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="./cs/member.css" />
-<link rel="stylesheet" type="text/css" href="./cs/bbs.css" />
+<link rel="stylesheet" type="text/css" href="./css/member.css" />
+<link rel="stylesheet" type="text/css" href="./css/bbs.css" />
 <script src="./js/jquery.js"></script>
 <script src="./js/member.js"></script>
 <title>쇼핑몰</title>
@@ -58,7 +58,7 @@ function openConfirmId(loginform){
 			<tr>
 			<td height=35 colspan=6 align="center">
 			<input
-				type="button" value="회원가입" onclick="javascript:window.location='./MemberJoin.do'">
+				type="button" value="회원가입" onclick="location='./MemberJoin.do'">
 			<a href="#">
 			<input type="button" value="아이디/비밀번호 찾기" 	onclick="openConfirmId(this.form)">
 			</a>

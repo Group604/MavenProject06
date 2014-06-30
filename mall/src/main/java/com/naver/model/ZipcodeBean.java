@@ -3,11 +3,12 @@ package com.naver.model;
 public class ZipcodeBean {
 	
 	private int no;
-	private String zipcode;//우편번호
-	private String sido;//시도
-	private String gugun;//구군
-	private String dong;//동
-	private String bunji;//번지
+	private String zipcode;
+	private String sido;
+	private String gugun;
+	private String dong;
+	private String ri;
+	private String bunji;
 	
 	public int getNo() {
 		return no;
@@ -39,6 +40,14 @@ public class ZipcodeBean {
 	public void setDong(String dong) {
 		this.dong = dong;
 	}
+	
+	public String getRi() {
+		return ri;
+	}
+	public void setRi(String ri) {
+		this.ri = ri;
+	}
+	
 	public String getBunji() {
 		return bunji;
 	}

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>비번찾기</title>
-<link rel="stylesheet" type="text/css" href="./cs/member.css" />
+<link rel="stylesheet" type="text/css" href="./css/member.css" />
 <script src="./js/jquery.js"></script>
 <script>
 	function pwd_check() {
@@ -27,20 +27,20 @@
 <c:if test="${empty dm }">
 	<div id="pwd_wrap">
 		<h2 class="pwd_title">비번찾기</h2>
-		<form method="post" action="pwd_find_ok.do" onsubmit="return pwd_check();">
+		<form method="post" action="PwdFindOk.do" onsubmit="return pwd_check();">
 			<table id="pwd_t">
 				<tr>
 					<th>아이디</th>
-					<td><input name="pwd_id" id="pwd_id" size="14" class="box" />
+					<td><input name="member_id" id="pwd_id" size="14" class="box" />
 					</td>
 				</tr>
 				<tr>
 					<th>이름</th>
-					<td><input name="pwd_name" id="pwd_name"
+					<td><input name="member_name" id="pwd_name"
 						size="14" class="box" /></td>
 				</tr>
 			</table>
-  <div id="pwd_name">
+  <div id="pwd_menu">
   <input type="submit" value="찾기" class="input_b" />
   <input type="reset" value="취소" class="input_b" onclick="$('#pwd_id').focus();" />
   </div>

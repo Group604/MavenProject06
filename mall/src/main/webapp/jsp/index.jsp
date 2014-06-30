@@ -10,12 +10,13 @@
 </head>
 <body>
 	<div id="index_wrap">
-		<form method="post" action="member_logout.do">
+		<form method="post" action="MemberLogout.do">
 			<table id="index_t">
 				<tr>
 					<th><input type="button" value="정보수정" class="input_b"
-						onclick="location='member_edit.do'" /> <input type="button"
-						value="회원탈퇴" class="input_b" onclick="location='member_del.do'" />
+						onclick="location='MemberEdit.do'" /> 
+						<input type="button"
+						value="회원탈퇴" class="input_b" onclick="location='MemberDel.do'" />
 						<input type="submit" value="로그아웃" class="input_b" /></th>
 					</tr>
 					<tr>

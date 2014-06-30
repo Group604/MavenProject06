@@ -1,5 +1,6 @@
 package com.naver.action;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 import pwdconv.PwdChange;
 
 import com.naver.dao.MemberDAO;
+import com.naver.dao.PhoneMailDAO;
+import com.naver.dao.ZipcodeDAO;
 import com.naver.model.MemberBean;
+import com.naver.model.PhoneMailBean;
 import com.naver.model.ZipcodeBean;
 import com.naver.model.ZipcodeBean2;
 
@@ -32,45 +36,187 @@ public class MemberAction {
 		this.memberService = memberService;
 	}// setter DI 설정
 
-	//로그인 페이지 
-	@RequestMapping(value = "/MemberLogin.do")
-	public String member_login() {
+	private ZipcodeDAO zipcodeService;
+
+	public void setZipcodeService(ZipcodeDAO zipcodeService) {
+		this.zipcodeService = zipcodeService;
+	}
+
+	private PhoneMailDAO phonemailService;
+
+	public void setPhonemailService(PhoneMailDAO phonemailService) {
+		this.phonemailService = phonemailService;
+	}// setter DI 설정
+
+	/* List<PhoneMailBean> phone= this.phonemailService.getPhoneList(); */
+
+	/* 아이디 체크 메소드 */
+	public int member_check(MemberBean mb) {
+		return this.memberService.member_check(mb);
+	}
+
+	/* 로그인 페이지 */
+	@RequestMapping(value = "/MemberLogin")
+	public String member_login(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+
+		if (request.getParameter("id") != null) {
+			out.println("<script>");
+			out.println("alert('" + request.getParameter("id")
+					+ "님 회원가입이 완료되었습니다')");
+			out.println("location='/MemberLogin.do'");
+			out.println("</script>");
+		}
 		return "member/member_login";
 	}
-	
-	/*
 
-	 회원가입폼 
-	@RequestMapping(value = "/member_join")
-	public String member_join(Model j) {
-		String[] phone = { "010", "011", "016", "018", "019" };
-		String[] email = { "naver.com", "daum.net", "gmail.com", "nate.com",
-				"korea.com", "직접입력" };
+	/* 회원 아이디 체크 */
+	@RequestMapping(value = "/MemberFind")
+	public String MemberFind(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return "member/member_find";
+	}
 
-		
-		 * List<PhoneBean> phone=this.memberService.getphoneList();
-		 * List<EmailBean> email=this.memberService.getemailList();
-		 
-		
-		 * MemPhoneMailBean mb=new MemPhoneMailBean();
-		 * 
-		 * mb=this.memberService.getList();
-		 * 
-		 * List phone=new ArrayList(); List email=new ArrayList();
-		 
+	/* 회원 아이디 체크 확인 */
+	@RequestMapping(value = "/MemberFindOk")
+	public String MemberFindOk(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
 
-		
-		 * phone.add(this.memberService.getphoneList());
-		 * email.add(this.memberService.getemailList());
-		 
-		j.addAttribute("phone", phone);
-		j.addAttribute("email", email);
+		MemberBean member = new MemberBean();
+		String name = request.getParameter("member_name");
+		String jumin1 = request.getParameter("member_jumin1");
+		String jumin2 = request.getParameter("member_jumin2");
 
+		member.setMember_name(name);
+		member.setMember_jumin1(jumin1);
+		member.setMember_jumin2(jumin2);
+
+		member = memberService.findId(member);
+
+		if (member != null) {
+			request.setAttribute("id", member.getMember_id());
+			request.setAttribute("passwd", member.getMember_pwd());
+
+			return "./member/member_find_ok.jsp";
+		} else {
+
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('입력한 정보가 일치하지 않습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+		}
+
+		return null;
+	}
+
+	/* 비번찾기 */
+	@RequestMapping(value = "/PwdFind")
+	public String pwd_find() {
+		return "member/pwd_find";
+	}
+
+	/* 비번찾기 결과 */
+	@RequestMapping(value = "/PwdFindOk")
+	public String pwd_find_ok(@RequestParam("member_id") String pwd_id,
+			@RequestParam("member_name") String pwd_name,
+			HttpServletResponse response, @ModelAttribute MemberBean pm, Model m)
+			throws Exception {
+
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+
+		pm.setMember_id(pwd_id);
+		pm.setMember_name(pwd_name);
+
+		if (member_check(pm) > 0) {// member테이블이 비어있을 때 회원여부 체크
+			MemberBean dm = this.memberService.pwd_find(pm);
+			System.out.println("????");
+			// 아이디와 이름을 기준으로 비번 발번
+			if (dm != null) {
+				Random r = new Random();
+				int random = r.nextInt(100000);// 임시비번 난수 발생
+				MemberBean rm = new MemberBean();
+				rm.setMember_id(pwd_id);
+				rm.setMember_pwd(PwdChange.getPassWordToXEMD5String(Integer
+						.toString(random)));// md5로 암호화 해서
+				// 임시 비번을 저장,toString()메서드가 정수형 숫자를 문자열로 바꿈.
+
+				this.memberService.edit_pm(rm);// 임시비번 수정
+
+				m.addAttribute("dm", dm);
+				m.addAttribute("random", random);// 임시 비번 저장
+				return "member/pwd_find";
+
+			} else if (dm == null) {
+				System.out.println("!");
+				out.println("<script>");
+				out.println("alert('회원이 아닙니다!')");
+				out.println("history.back()");
+				out.println("</script>");
+			}
+		} else {
+			out.println("<script>");
+			out.println("alert('회원이 아닙니다!')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+		return null;
+	}
+
+	/* 회원 가입 */
+	@RequestMapping(value = "/MemberJoin")
+	public String member_join(Model m) {
+		List<PhoneMailBean> phone = this.phonemailService.getPhoneList();
+		List<PhoneMailBean> email = this.phonemailService.getEmailList();
+
+		m.addAttribute("phone", phone);
+		m.addAttribute("email", email);
 		return "member/member_join";
 	}
 
-	 아이디 중복 체크 
-	@RequestMapping(value = "/join_idcheck.do")
+	/* 우편 검색 폼 */
+	@RequestMapping(value = "/ZipFind")
+	public String zip_find() {
+		return "member/zip_find";
+	}
+
+	/* 우편번호 검색 결과 */
+	@RequestMapping(value = "/ZipFindOk")
+	public ModelAndView zip_find_ok(@RequestParam("dong") String dong)
+			throws Exception {
+		List<ZipcodeBean> zlist = this.memberService.zip("%" + dong + "%");
+
+		List<ZipcodeBean2> zlist2 = new ArrayList<ZipcodeBean2>();
+
+		for (ZipcodeBean z : zlist) {// 확장 for
+
+			z.setRi(z.getRi() == null ? "" : z.getRi());
+			z.setBunji(z.getBunji() == null ? "" : z.getBunji());
+
+			String addr = z.getSido() + " " + z.getGugun() + " " + z.getDong()
+					+ " " + z.getRi() + " " + z.getBunji();// 주소 저장
+
+			ZipcodeBean2 z2 = new ZipcodeBean2();
+			z2.setZipcode(z.getZipcode());// 우편번호 저장
+			z2.setAdd(addr);// 시도 구군 동을 저장
+
+			zlist2.add(z2);// 컬렉션에 추가
+		}
+		ModelAndView zm = new ModelAndView("member/zip_find");
+		zm.addObject("zipcodelist", zlist2);
+		zm.addObject("dong", dong);
+
+		return zm;
+	}
+
+	/* 회원가입시 아이디 중복 체크 */
+	@RequestMapping(value = "/JoinIDCheck")
 	public String join_idcheck(@RequestParam("join_id") String join_id,
 			HttpServletResponse response, @ModelAttribute MemberBean db_id)
 			throws Exception {
@@ -87,46 +233,34 @@ public class MemberAction {
 		return null;
 	}
 
-	 우편 검색 폼 
-	@RequestMapping(value = "/zip_find.do")
-	public String zip_find() {
-		return "member/zip_find";
-	}
-
-	 우편번호 검색 결과 
-	@RequestMapping(value = "/zip_find_ok.do")
-	public ModelAndView zip_find_ok(@RequestParam("dong") String dong)
-			throws Exception {
-		List<ZipcodeBean> zlist = this.memberService.zip("%" + dong + "%");
-
-		List<ZipcodeBean2> zlist2 = new ArrayList<ZipcodeBean2>();
-
-		for (ZipcodeBean z : zlist) {// 확정 for
-			String addr = z.getSido() + " " + z.getGugun() + " " + z.getDong();// 시
-																				// 도
-																				// 구군
-																				// 동을
-																				// 저장
-			ZipcodeBean2 z2 = new ZipcodeBean2();
-			z2.setZipcode(z.getZipcode());// 우편번호 저장
-			z2.setAdd(addr);// 시도 구군 동을 저장
-
-			zlist2.add(z2);// 컬렉션에 추가
-		}
-		ModelAndView zm = new ModelAndView("member/zip_find");
-		zm.addObject("zipcodelist", zlist2);
-		zm.addObject("dong", dong);
-		System.out.println("zip_find_ok.do");
-		return zm;
-	}
-
-	 회원저장 
-	@RequestMapping(value = "/member_join_ok.do")
+	/* 회원저장 */
+	@RequestMapping(value = "/MemberJoinOk")
 	public String member_join_ok(@ModelAttribute MemberBean m,
 			HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		MemberBean db_id = this.memberService.idcheck(m.getJoin_id());
+
+		System.out.println("회원아이디:" + m.getMember_id());
+		System.out.println("회원비번:" + m.getMember_pwd());
+		System.out.println("회원이름:" + m.getMember_name());
+		System.out.println("회원주소:" + m.getMember_zip());
+		System.out.println("회원주소2:" + m.getMember_zip2());
+		System.out.println("회원주소1:" + m.getMember_addr());
+		System.out.println("회원주소2:" + m.getMember_addr2());
+		System.out.println("회원전번1:" + m.getMember_phone01());
+		System.out.println("회원전번2:" + m.getMember_phone02());
+		System.out.println("회원전번3:" + m.getMember_phone03());
+		System.out.println("회원email:" + m.getMember_emailid());
+		System.out.println("회원domain:" + m.getMember_emaildomain());
+		System.out.println("회원del_cont:" + m.getMember_delcont());
+		System.out.println("회원del_date:" + m.getMember_deldate());
+		System.out.println("회원jumin1:" + m.getMember_jumin1());
+		System.out.println("회원jumin2:" + m.getMember_jumin2());
+		System.out.println("회원상태:" + m.getMember_state());
+		System.out.println("회원admin:" + m.getMember_admin());
+		System.out.println("회원탈퇴일자:" + m.getMember_deldate());
+
+		MemberBean db_id = this.memberService.idcheck(m.getMember_id());
 		// 중복 아이디 검색
 		if (db_id != null) {
 			out.println("<script>");
@@ -135,81 +269,40 @@ public class MemberAction {
 			out.println("</script>");
 		} else {
 			String join_pwd = PwdChange.getPassWordToXEMD5String(m
-					.getJoin_pwd());
+					.getMember_pwd());
 			// 비번을 md5로 암호화 함.
-			m.setJoin_pwd(join_pwd);
+			m.setMember_pwd(join_pwd);
 			this.memberService.insertMember(m);// 회원저장
-			return "redirect:/member_login.do";
-		}
-		return null;
-	}
-
-	 비번찾기 
-	@RequestMapping(value = "/pwd_find.do")
-	public String pwd_find() {
-		return "member/pwd_find";
-	}
-
-	 비번찾기 결과 
-	@RequestMapping(value = "/pwd_find_ok.do")
-	public String pwd_find_ok(@RequestParam("pwd_id") String pwd_id,
-			@RequestParam("pwd_name") String pwd_name,
-			HttpServletResponse response, @ModelAttribute MemberBean pm, Model m)
-			throws Exception {
-
-		System.out.println("pwd_find_ok.do");
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-
-		pm.setJoin_id(pwd_id);
-		pm.setJoin_name(pwd_name);
-
-		MemberBean dm = this.memberService.pwd_find(pm);
-		// 아이디와 이름을 기준으로 비번 발번
-		if (dm != null) {
-			Random r = new Random();
-			int random = r.nextInt(100000);// 임시비번 난수 발생
-			MemberBean rm = new MemberBean();
-			rm.setJoin_id(pwd_id);
-			rm.setJoin_pwd(PwdChange.getPassWordToXEMD5String(Integer
-					.toString(random)));// md5로 암호화 해서
-			// 임시 비번을 저장,toString()메서드가 정수형 숫자를 문자열로 바꿈.
-
-			this.memberService.edit_pm(rm);// 임시비번 수정
-
-			m.addAttribute("dm", dm);
-			m.addAttribute("random", random);// 임시 비번 저장
-			return "member/pwd_find";
-		} else {
 			out.println("<script>");
-			out.println("alert('회원으로 검색되지 않습니다!')");
-			out.println("history.back()");
+			out.println("alert('" + m.getMember_id() + "님 회원가입이 완료되었습니다')");
+			out.println("location='MemberLogin.do'");
 			out.println("</script>");
 		}
 		return null;
 	}
 
-	 로그인 인증 
-	@RequestMapping(value = "/member_login_ok.do")
-	public String member_login_ok(@RequestParam("login_id") String login_id,
-			@RequestParam("login_pwd") String login_pwd,
+	/* 로그인 인증 */
+
+	@RequestMapping(value = "/MemberLoginOk")
+	public String member_login_ok(@RequestParam("member_id") String login_id,
+			@RequestParam("member_pwd") String login_pwd,
 			HttpServletResponse response, @ModelAttribute MemberBean db_id,
 			HttpSession session, HttpServletRequest request) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		session = request.getSession();
 
-		db_id = this.memberService.loginCheck(login_id);
-		// 로그인 인증
+		db_id = this.memberService.loginCheck(login_id); // 로그인 인증
 		if (db_id == null) {
 			out.println("<script>");
 			out.println("alert('가입 안된 회원입니다!')");
 			out.println("history.back()");
 			out.println("</script>");
 		} else {
-			String pwd = PwdChange.getPassWordToXEMD5String(login_pwd);
-			// 입력비번을 MD5로 암호화
-			if (!db_id.getJoin_pwd().equals(pwd)) {
+			String pwd = PwdChange.getPassWordToXEMD5String(login_pwd); // 입력비번을
+																		// MD5로
+																		// 암호화
+			if (!db_id.getMember_pwd().equals(pwd)) {
 				out.println("<script>");
 				out.println("alert('비번이 다릅니다!')");
 				out.println("history.go(-1)");
@@ -217,17 +310,16 @@ public class MemberAction {
 			} else {
 				session.setAttribute("id", login_id);
 				System.out.println("go to index.do!");
-				return "redirect:/index.do";
+				return "redirect:/Index.do";
 			}
 		}
 		return null;
 	}
 
-	 메인 화면 
-	@RequestMapping(value = "/index.do")
+	/* 메인 화면 */
+	@RequestMapping(value = "/Index")
 	public String index(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) throws Exception {
-		System.out.println("indexo.do!");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		session = request.getSession();
@@ -236,7 +328,7 @@ public class MemberAction {
 		if (id == null) {
 			out.println("<script>");
 			out.println("alert('다시 로그인 해주세요!')");
-			out.println("location='member_login.do'");
+			out.println("location='MemberLogin.do'");
 			out.println("</script>");
 		} else {
 			return "index";
@@ -244,27 +336,9 @@ public class MemberAction {
 		return null;
 	}
 
-	 로그아웃 
-	@RequestMapping(value = "/member_logout.do")
-	public String member_logout(HttpServletRequest request,
-			HttpServletResponse response, HttpSession session) throws Exception {
-		System.out.println("indexo.do!");
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		session = request.getSession();
+	/* 회원 정보수정 폼 */
 
-		session.invalidate();// 세션 종료
-
-		out.println("<script>");
-		out.println("alert('로그아웃 되었습니다!')");
-		out.println("location='member_login.do'");
-		out.println("</script>");
-
-		return null;
-	}
-
-	 정보수정 폼 
-	@RequestMapping(value = "/member_edit.do")
+	@RequestMapping(value = "/MemberEdit")
 	public String member_eidt(HttpServletResponse response,
 			HttpSession session, HttpServletRequest request, Model j)
 			throws Exception {
@@ -276,13 +350,11 @@ public class MemberAction {
 		if (id == null) {
 			out.println("<script>");
 			out.println("alert('다시 로그인 해주세요!')");
-			out.println("lcation='member_login.do'");
+			out.println("lcation='MemberLogin.do'");
 			out.println("</script>");
 		} else {
-			String[] phone = { "010", "011", "016", "018", "019" };
-			String[] email = { "naver.com", "daum.net", "gmail.com",
-					"nate.com", "korea.com", "직접입력" };
-
+			List<PhoneMailBean> phone = this.phonemailService.getPhoneList();
+			List<PhoneMailBean> email = this.phonemailService.getEmailList();
 			j.addAttribute("phone", phone);
 			j.addAttribute("email", email);
 
@@ -293,8 +365,9 @@ public class MemberAction {
 		return null;
 	}
 
-	 정보수정 완료 
-	@RequestMapping(value = "/member_edit_ok.do")
+	/* 회원 정보수정 완료 */
+
+	@RequestMapping(value = "/MemberEditOk")
 	public String member_edit_ok(@ModelAttribute MemberBean eb,
 			HttpServletResponse response, HttpServletRequest request,
 			HttpSession session) throws Exception {
@@ -306,49 +379,70 @@ public class MemberAction {
 		if (id == null) {
 			out.println("<script>");
 			out.println("alert('다시 로그인 해주세요!')");
-			out.println("lcation='member_login.do'");
+			out.println("lcation='MemberLogin.do'");
 			out.println("</script>");
 		} else {
-			eb.setJoin_id(id);
-			String pwd = PwdChange.getPassWordToXEMD5String(eb.getJoin_pwd());
-			// md5로 암호화
-			eb.setJoin_pwd(pwd);// 암호화 된 패스워드 저장
-			this.memberService.editMember(eb);// 수정메서드 호출
+			eb.setMember_id(id);
+			String pwd = PwdChange.getPassWordToXEMD5String(eb.getMember_pwd()); // md5로
+																					// 암호화
+			eb.setMember_pwd(pwd);// 암호화 된 패스워드 저장
 
-			out.println("<script>");
-			out.println("alert('수정 되었습니다!')");
-			out.println("location='member_edit.do'");
-			out.println("</script>");
+			if (this.memberService.editMember(eb) > 0) {// 수정메서드 호출
+				out.println("<script>");
+				out.println("alert('수정 되었습니다!')");
+				out.println("location='MemberLogin.do'");
+				out.println("</script>");
+			}
 		}
 		return null;
 	}
 
-	 회원 탈퇴 폼 
-	@RequestMapping(value = "/member_del.do")
-	public String member_del(HttpServletResponse response,
-			HttpServletRequest request, HttpSession session, Model dm)
-			throws Exception {
+	/* 로그아웃 */
+	@RequestMapping(value = "/MemberLogout")
+	public String member_logout(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) throws Exception {
+
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String id = (String) session.getAttribute("id");
-		if (id == null) {
-			out.println("<script>");
-			out.println("alert('다시 로그인 하세요!')");
-			out.println("location='member_login.do'");
-			out.println("</script>");
-		} else {
-			MemberBean name = this.memberService.idcheck(id);
-			dm.addAttribute("name", name.getJoin_name());
-			return "member/member_del";
+		session = request.getSession();
 
-		}
+		session.invalidate();// 세션 종료
+
+		out.println("<script>");
+		out.println("alert('로그아웃 되었습니다!')");
+		out.println("location='MemberLogin.do'");
+		out.println("</script>");
+
 		return null;
 	}
 
-	 회원탈퇴 
-	@RequestMapping(value = "/member_del_ok.do")
-	public String member_del_ok(@RequestParam("del_pwd") String del_pwd,
-			@RequestParam("del_cont") String del_cont,
+	 /* 회원 탈퇴 폼 */
+	 @RequestMapping(value = "/MemberDel") 
+	 public String member_del(HttpServletResponse response, 
+			 				  HttpServletRequest request,
+			 				  HttpSession session, 
+			 				  Model dm) throws Exception {
+		 response.setContentType("text/html;charset=utf-8"); 
+		 PrintWriter out =response.getWriter(); 
+		 String id = (String) session.getAttribute("id"); 
+	 if(id == null) { 
+		 out.println("<script>");
+		 out.println("alert('다시 로그인 하세요!')");
+		 out.println("location='MemberLogin.do'"); 
+		 out.println("</script>"); 
+	  }else { 
+		 MemberBean name = this.memberService.idcheck(id);
+		 dm.addAttribute("name", name.getMember_name()); 
+		 return "member/member_del";
+	 } 
+	 return null; 
+	}
+	 
+	 
+	/* 회원탈퇴 */
+	@RequestMapping(value = "/MemberDelOk")
+	public String member_del_ok(@RequestParam("member_pwd") String del_pwd,
+			@RequestParam("member_delcont") String del_cont,
 			@ModelAttribute MemberBean db_pwd, HttpServletResponse response,
 			HttpServletRequest request, HttpSession session) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
@@ -359,32 +453,230 @@ public class MemberAction {
 		if (id == null) {
 			out.println("<script>");
 			out.println("alert('다시 로그인 하세요!')");
-			out.println("location='member_login.do'");
+			out.println("location='MemberLogin.do'");
 			out.println("</script>");
 		} else {
 			db_pwd = this.memberService.idcheck(id);
 			String pwd = PwdChange.getPassWordToXEMD5String(del_pwd);
-			if (!db_pwd.getJoin_pwd().equals(pwd)) {
+			if (!db_pwd.getMember_pwd().equals(pwd)) {
 				out.println("<script>");
 				out.println("alert('비번이 다릅니다!')");
 				out.println("history.back()");
 				out.println("</script>");
 			} else {
 				MemberBean dm = new MemberBean();
-				dm.setJoin_id(id);
-				dm.setJoin_delcont(del_cont);
+				dm.setMember_id(id);
+				dm.setMember_delcont(del_cont);
 
-				this.memberService.delMember(dm);// 회원탈퇴
+				if (this.memberService.delMember(dm)>0) {// 회원탈퇴
 
-				session.invalidate();// 세션만료
+					session.invalidate();// 세션만료
 
-				out.println("<script>");
-				out.println("alert('회원 탈퇴 했습니다!')");
-				out.println("location='member_login.do'");
-				out.println("</script>");
+					out.println("<script>");
+					out.println("alert('회원 탈퇴 했습니다!')");
+					out.println("location='MemberLogin.do'");
+					out.println("</script>");
+				}
 			}
 		}
 		return null;
-	}*/
+	}
+
+	/*
+	 * @RequestMapping(value = "/Zipcode.do", method = RequestMethod.GET) public
+	 * ModelAndView zipcode(@RequestParam("search") String search) {
+	 * ModelAndView mav = new ModelAndView(); SimpleDateFormat sdf = new
+	 * SimpleDateFormat("yyyyMMdd");
+	 * 
+	 * if (search != null && search.trim().isEmpty() == false) {
+	 * List<NewzipcodeBean> list = zipcodeService.list("%" + search + "%");
+	 * 
+	 * NewzipcodeBean zipcode = new NewzipcodeBean();
+	 * 
+	 * 
+	 * zipcode.setUnder("Y".equals(zipcode.isUnder()) ? true : false);
+	 * 
+	 * String bldgNo2 = zipcode.getBldgNo2().toString(); if (bldgNo2 != null) {
+	 * zipcode.setBldgNo2(Integer.parseInt(bldgNo2)); }
+	 * 
+	 * String applyDate = zipcode.getApplyDate().toString(); try {
+	 * zipcode.setApplyDate(sdf.parse(applyDate)); } catch (ParseException e) {
+	 * System.out.println("parse exception : " + applyDate); }
+	 * 
+	 * mav.addObject("list", list); }
+	 * 
+	 * return mav; }
+	 */
+
+	/*
+	 * 
+	 * 회원가입폼
+	 * 
+	 * @RequestMapping(value = "/member_join") public String member_join(Model
+	 * j) { String[] phone = { "010", "011", "016", "018", "019" }; String[]
+	 * email = { "naver.com", "daum.net", "gmail.com", "nate.com", "korea.com",
+	 * "직접입력" };
+	 * 
+	 * 
+	 * List<PhoneBean> phone=this.memberService.getphoneList(); List<EmailBean>
+	 * email=this.memberService.getemailList();
+	 * 
+	 * 
+	 * MemPhoneMailBean mb=new MemPhoneMailBean();
+	 * 
+	 * mb=this.memberService.getList();
+	 * 
+	 * List phone=new ArrayList(); List email=new ArrayList();
+	 * 
+	 * 
+	 * 
+	 * phone.add(this.memberService.getphoneList());
+	 * email.add(this.memberService.getemailList());
+	 * 
+	 * j.addAttribute("phone", phone); j.addAttribute("email", email);
+	 * 
+	 * return "member/member_join"; }
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 로그인 인증
+	 * 
+	 * @RequestMapping(value = "/member_login_ok.do") public String
+	 * member_login_ok(@RequestParam("login_id") String login_id,
+	 * 
+	 * @RequestParam("login_pwd") String login_pwd, HttpServletResponse
+	 * response, @ModelAttribute MemberBean db_id, HttpSession session,
+	 * HttpServletRequest request) throws Exception {
+	 * response.setContentType("text/html;charset=utf-8"); PrintWriter out =
+	 * response.getWriter(); session = request.getSession();
+	 * 
+	 * db_id = this.memberService.loginCheck(login_id); // 로그인 인증 if (db_id ==
+	 * null) { out.println("<script>"); out.println("alert('가입 안된 회원입니다!')");
+	 * out.println("history.back()"); out.println("</script>"); } else { String
+	 * pwd = PwdChange.getPassWordToXEMD5String(login_pwd); // 입력비번을 MD5로 암호화 if
+	 * (!db_id.getJoin_pwd().equals(pwd)) { out.println("<script>");
+	 * out.println("alert('비번이 다릅니다!')"); out.println("history.go(-1)");
+	 * out.println("</script>"); } else { session.setAttribute("id", login_id);
+	 * System.out.println("go to index.do!"); return "redirect:/index.do"; } }
+	 * return null; }
+	 * 
+	 * 메인 화면
+	 * 
+	 * @RequestMapping(value = "/index.do") public String
+	 * index(HttpServletRequest request, HttpServletResponse response,
+	 * HttpSession session) throws Exception { System.out.println("indexo.do!");
+	 * response.setContentType("text/html;charset=utf-8"); PrintWriter out =
+	 * response.getWriter(); session = request.getSession();
+	 * 
+	 * String id = (String) session.getAttribute("id"); if (id == null) {
+	 * out.println("<script>"); out.println("alert('다시 로그인 해주세요!')");
+	 * out.println("location='member_login.do'"); out.println("</script>"); }
+	 * else { return "index"; } return null; }
+	 * 
+	 * 로그아웃
+	 * 
+	 * @RequestMapping(value = "/member_logout.do") public String
+	 * member_logout(HttpServletRequest request, HttpServletResponse response,
+	 * HttpSession session) throws Exception { System.out.println("indexo.do!");
+	 * response.setContentType("text/html;charset=utf-8"); PrintWriter out =
+	 * response.getWriter(); session = request.getSession();
+	 * 
+	 * session.invalidate();// 세션 종료
+	 * 
+	 * out.println("<script>"); out.println("alert('로그아웃 되었습니다!')");
+	 * out.println("location='member_login.do'"); out.println("</script>");
+	 * 
+	 * return null; }
+	 * 
+	 * 정보수정 폼
+	 * 
+	 * @RequestMapping(value = "/member_edit.do") public String
+	 * member_eidt(HttpServletResponse response, HttpSession session,
+	 * HttpServletRequest request, Model j) throws Exception {
+	 * response.setContentType("text/html;charset=utf-8"); PrintWriter out =
+	 * response.getWriter(); session = request.getSession();
+	 * 
+	 * String id = (String) session.getAttribute("id"); if (id == null) {
+	 * out.println("<script>"); out.println("alert('다시 로그인 해주세요!')");
+	 * out.println("lcation='member_login.do'"); out.println("</script>"); }
+	 * else { String[] phone = { "010", "011", "016", "018", "019" }; String[]
+	 * email = { "naver.com", "daum.net", "gmail.com", "nate.com", "korea.com",
+	 * "직접입력" };
+	 * 
+	 * j.addAttribute("phone", phone); j.addAttribute("email", email);
+	 * 
+	 * MemberBean dm = this.memberService.idcheck(id); j.addAttribute("em", dm);
+	 * return "member/member_edit"; } return null; }
+	 * 
+	 * 정보수정 완료
+	 * 
+	 * @RequestMapping(value = "/member_edit_ok.do") public String
+	 * member_edit_ok(@ModelAttribute MemberBean eb, HttpServletResponse
+	 * response, HttpServletRequest request, HttpSession session) throws
+	 * Exception { response.setContentType("text/html;charset=utf-8");
+	 * PrintWriter out = response.getWriter(); session = request.getSession();
+	 * 
+	 * String id = (String) session.getAttribute("id"); if (id == null) {
+	 * out.println("<script>"); out.println("alert('다시 로그인 해주세요!')");
+	 * out.println("lcation='member_login.do'"); out.println("</script>"); }
+	 * else { eb.setJoin_id(id); String pwd =
+	 * PwdChange.getPassWordToXEMD5String(eb.getJoin_pwd()); // md5로 암호화
+	 * eb.setJoin_pwd(pwd);// 암호화 된 패스워드 저장 this.memberService.editMember(eb);//
+	 * 수정메서드 호출
+	 * 
+	 * out.println("<script>"); out.println("alert('수정 되었습니다!')");
+	 * out.println("location='member_edit.do'"); out.println("</script>"); }
+	 * return null; }
+	 * 
+	 * 회원 탈퇴 폼
+	 * 
+	 * @RequestMapping(value = "/member_del.do") public String
+	 * member_del(HttpServletResponse response, HttpServletRequest request,
+	 * HttpSession session, Model dm) throws Exception {
+	 * response.setContentType("text/html;charset=utf-8"); PrintWriter out =
+	 * response.getWriter(); String id = (String) session.getAttribute("id"); if
+	 * (id == null) { out.println("<script>");
+	 * out.println("alert('다시 로그인 하세요!')");
+	 * out.println("location='member_login.do'"); out.println("</script>"); }
+	 * else { MemberBean name = this.memberService.idcheck(id);
+	 * dm.addAttribute("name", name.getJoin_name()); return "member/member_del";
+	 * 
+	 * } return null; }
+	 * 
+	 * 회원탈퇴
+	 * 
+	 * @RequestMapping(value = "/member_del_ok.do") public String
+	 * member_del_ok(@RequestParam("del_pwd") String del_pwd,
+	 * 
+	 * @RequestParam("del_cont") String del_cont,
+	 * 
+	 * @ModelAttribute MemberBean db_pwd, HttpServletResponse response,
+	 * HttpServletRequest request, HttpSession session) throws Exception {
+	 * response.setContentType("text/html;charset=utf-8"); PrintWriter out =
+	 * response.getWriter(); session = request.getSession();
+	 * 
+	 * String id = (String) session.getAttribute("id"); if (id == null) {
+	 * out.println("<script>"); out.println("alert('다시 로그인 하세요!')");
+	 * out.println("location='member_login.do'"); out.println("</script>"); }
+	 * else { db_pwd = this.memberService.idcheck(id); String pwd =
+	 * PwdChange.getPassWordToXEMD5String(del_pwd); if
+	 * (!db_pwd.getJoin_pwd().equals(pwd)) { out.println("<script>");
+	 * out.println("alert('비번이 다릅니다!')"); out.println("history.back()");
+	 * out.println("</script>"); } else { MemberBean dm = new MemberBean();
+	 * dm.setJoin_id(id); dm.setJoin_delcont(del_cont);
+	 * 
+	 * this.memberService.delMember(dm);// 회원탈퇴
+	 * 
+	 * session.invalidate();// 세션만료
+	 * 
+	 * out.println("<script>"); out.println("alert('회원 탈퇴 했습니다!')");
+	 * out.println("location='member_login.do'"); out.println("</script>"); } }
+	 * return null; }
+	 */
 
 }
