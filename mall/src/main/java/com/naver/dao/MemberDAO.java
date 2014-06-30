@@ -28,6 +28,8 @@ public interface MemberDAO {
 	int editMember(MemberBean eb);//정보 수정
 
 	int delMember(MemberBean dm);//회원탈퇴
+
+	int IsAdm(String id);//관리자 여부
 	
 
 	/*List<PhoneBean> getphoneList();//phoneList

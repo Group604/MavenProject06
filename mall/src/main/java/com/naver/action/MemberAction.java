@@ -323,14 +323,19 @@ public class MemberAction {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		session = request.getSession();
-
+		
 		String id = (String) session.getAttribute("id");
+		
+		boolean isAdm=(this.memberService.IsAdm(id)==1?true:false);//1이면 어드민,2면 일반
+		
 		if (id == null) {
 			out.println("<script>");
 			out.println("alert('다시 로그인 해주세요!')");
 			out.println("location='MemberLogin.do'");
 			out.println("</script>");
 		} else {
+			if(isAdm)
+			
 			return "index";
 		}
 		return null;

@@ -66,6 +66,10 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.update("Member.member_del", dm);
 	}
 
+	public int IsAdm(String id) {
+		return sqlSession.selectOne("Member.is_adm", id);
+	}
+
 	/*
 	 * public List<PhoneBean> getphoneList() { return
 	 * this.sqlSession.selectList("Member.phone_list"); }

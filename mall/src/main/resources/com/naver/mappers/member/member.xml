@@ -113,7 +113,13 @@
 	 where member_id=#{member_id}
 	</update>
 	
-	
+	<!-- 관리자 여부 -->
+	<select id="is_adm" resultType="int">
+	select member_admin
+	  from member
+	 where member_id=#{member_id}
+	   and member_state=1
+	</select>
      </mapper>
     
     
