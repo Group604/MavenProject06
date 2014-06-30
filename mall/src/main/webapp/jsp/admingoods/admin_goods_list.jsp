@@ -1,12 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="admin.model.*" %>
-<%
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%
 	Collection list = (Collection) request.getAttribute("list");
 	Object obj[] = list.toArray();
 	GoodsBean agb = null;
-%>
+%> --%>
 
 <html>
 <head>
@@ -75,67 +74,74 @@ function goodsmodify(goods_num){
 				<p align="center"><font size=2>&nbsp;</font></p>
 				</td>
 			</tr>
-			<%
+			<c:if test="${!empty list}">
+			<c:forEach var="g" items="${list}">
+			
+			
+			</c:forEach>
+			
+<%-- 			<%
 					for (int i = 0; i < list.size(); i++) {
 					agb = (GoodsBean) obj[i];
-			%>
+			%> --%>
 			<tr>
+			
+			
 			<td>
 			<p align="center">
-				<font size=2><%=agb.getGOODS_NUM()%></font>
+				<%-- <font size=2><%=agb.getGOODS_NUM()%></font>--%>
+				${g.goods_num}
 			</p>
 			</td>
 			<td>
 			<p align="center">
 				<font size=2>
-					<%=agb.getGOODS_CATEGORY()%>
+				${g.goods_category}
 				</font>
 			</p>
 			</td>
 			<td>
-			<p align="center"><img
-			src="./upload/<%=agb.getGOODS_IMAGE().split(",")[0] %>"
-			width="50" height="50" border="0"></p>
+			<p align="center"><img src="./upload/${g.goods_image.split(",")[0]" width="50" height="50" border="0"></p>
 			</td>
 			<td>
 			<p align="center">
-				<font size=2><%=agb.getGOODS_NAME()%></font>
+			   ${g.goods_name}
 			</p>
 			</td>
 			<td>
 			<p align="center">
-				<font size=2><%=agb.getGOODS_PRICE()%></font>
+				${g.goods_price}
 			</p>
 			</td>
 			<td>
 			<p align="center">
-				<font size=2><%=agb.getGOODS_AMOUNT()%></font>
+			   ${g.goods_amount}
 			</p>
 			</td>
 			<td>
 			<p align="center">
 				<font size=2>
-					<%=agb.getGOODS_DATE().substring(0,10) %>
+				${g.goods_date}
 				</font>
 			</p>
 			</td>
 			<td>
 			<p align="center">
-			<a href="javascript:goodsmodify(<%=agb.getGOODS_NUM()%>);">
+			<a href="javascript:goodsmodify(${g.goods_num});">
 				<font size=2>수정</font>
 			</a>/
-			<a href="javascript:goodsdelete(<%=agb.getGOODS_NUM()%>);">
+			<a href="javascript:goodsdelete(${g.goods_num});">
 				<font size=2>삭제</font>
 			</a>
 			</p>
 			</td>
 			</tr>
-			<%
+
 				}
-			%>
 			</table>
 			</td>
 			</tr>
+			</c:if>
 			</form>
 		</table>
 		<!-- 상품 목록 -->

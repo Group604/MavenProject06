@@ -1,6 +1,10 @@
 package com.naver.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
+
+import com.naver.model.GoodsBean;
 
 public class GoodsDAOImpl implements GoodsDAO{
 
@@ -9,4 +13,8 @@ public class GoodsDAOImpl implements GoodsDAO{
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}//setter DI
+
+	public List<GoodsBean> getItemList(String item) {
+		return sqlSession.selectList("Goods.item_list", item);
+	}
 }

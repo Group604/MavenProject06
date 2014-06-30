@@ -11,6 +11,53 @@ public class GoodsBean {
 	private int GOODS_AMOUNT;
 	private int GOODS_PRICE;
 	private int GOODS_BEST;
+	
+	/* 페이징 변수 */
+
+
+	private int startrow;
+	private int endrow;
+
+
+	/*검색어 와 검색필드 */
+	private String find_field;
+	private String find_name;
+
+	
+	
+	
+	public int getStartrow() {
+		return startrow;
+	}
+
+	public void setStartrow(int startrow) {
+		this.startrow = startrow;
+	}
+
+	public int getEndrow() {
+		return endrow;
+	}
+
+	public void setEndrow(int endrow) {
+		this.endrow = endrow;
+	}
+
+	public String getFind_field() {
+		return find_field;
+	}
+
+	public void setFind_field(String find_field) {
+		this.find_field = find_field;
+	}
+
+	public String getFind_name() {
+		return find_name;
+	}
+
+	public void setFind_name(String find_name) {
+		this.find_name = find_name;
+	}
+
 	private String GOODS_DATE;
 
 	public int getGOODS_NUM() {

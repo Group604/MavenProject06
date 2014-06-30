@@ -1,28 +1,5 @@
 /* member.sql */
 
---drop table member},#{
---
---create table member(
---join_id   		varchar2(20) primary key,
---join_pwd 		varchar2(100) not null,
---join_name 		varchar2(20) not null,
---join_zip 		varchar2(5) not null,
---join_zip2 		varchar2(5) not null,
---join_addr 		varchar2(100) not null,
---join_addr2   varchar2(80) not null,
---join_phone01 varchar2(5),
---join_phone02 varchar2(10),
---join_phone03 varchar2(10),
---mail_id 		varchar2(30),
---mail_domain 	varchar2(50),
---join_date 		date,/*가입날자 */
---join_state 		number(10),/*가입회원 1, 탈퇴회원 2 */
---join_delcont 		varchar2(4000),/* 탈퇴 사유 */
---join_deldate 		date /*탈퇴 날짜 */
---)},#{
-
---drop table member;
-
 /* member테이블 수정본(2014.06.29)-다시 만듦 */
 create table member(
 member_id         	varchar2(20) primary key,
@@ -46,13 +23,9 @@ member_admin         number(1) default 2,/*관리자 여부:관리자 1, 일반 
 member_jumin1       varchar2(6),/* 주민번호 앞자리 */    
 member_jumin2       varchar2(7) /*주민번호 뒷자리*/      
 );
-update member set join_state=1
- where join_id='unix';
- 
- 
- select * from zipcode where dong like '%계산3%';
- 
- create table phone(
+
+/* 전번 테이블*/
+create table phone(
  no int primary key,
  phone_number varchar2(3),
  phone_compamy varchar2(100)
@@ -62,6 +35,7 @@ update member set join_state=1
  create sequence phone_no_seq
  increment by 1 start with 1 nocache;
  
+ /* email 테이블 */
  create table email(
  no int primary key,
  email_domain varchar2(100),
@@ -71,6 +45,7 @@ update member set join_state=1
  create sequence email_no_seq
  increment by 1 start with 1 nocache;
  
+ /* 전번 데이타 입력 */
  insert into phone values(phone_no_seq.nextval,'010','SK-TELECOM');
  insert into phone values(phone_no_seq.nextval,'010','KT');
  insert into phone values(phone_no_seq.nextval,'010','LG');
@@ -80,7 +55,7 @@ update member set join_state=1
  insert into phone values(phone_no_seq.nextval,'019','LG');
  insert into phone values(phone_no_seq.nextval,'010','ETC');
  
- 
+ /* email 데이타 입력 */
  insert into email values(email_no_seq.nextval,'naver.com','네이버');
  insert into email values(email_no_seq.nextval,'daum.net','다음');
  insert into email values(email_no_seq.nextval,'korea.com','코리아');
@@ -90,12 +65,78 @@ update member set join_state=1
  insert into email values(email_no_seq.nextval,'직접입력','직접입력');
  
  
- 
- select distinct phone_number from phone order by phone_number asc
- select email_domain from email order by no asc
- 
- 
- 
- select * from member;
+ /* 우편 번호 */
+CREATE TABLE ZIPCODE (
+  ID 		INT,
+  ZIPCODE   VARCHAR2(7),
+  SIDO      VARCHAR2(10),
+  GUGUN 	VARCHAR2(20),
+  DONG 		VARCHAR2(30),
+  RI 		VARCHAR2(70),
+  BUNJI 	VARCHAR2(30),
+  PRIMARY KEY (ID)
+);
 
- delete member;
+/* 상품 테이블 */
+CREATE TABLE GOODS(
+	GOODS_NUM 		INT,
+	GOODS_CATEGORY  VARCHAR2(20),
+	GOODS_NAME 		VARCHAR2(50),
+	GOODS_CONTENT 	VARCHAR2(3000),
+	GOODS_SIZE 		VARCHAR2(10),
+	GOODS_COLOR 	VARCHAR2(20),
+	GOODS_AMOUNT 	INT,
+	GOODS_PRICE 	INT,
+	GOODS_IMAGE 	VARCHAR2(300),
+	GOODS_BEST 		INT,
+	GOODS_DATE 		DATE,
+	PRIMARY KEY(GOODS_NUM)
+);
+
+
+create sequence goods_no_seq 
+increment by 1 start with 1 nocache;
+
+/* 장바구니 */
+CREATE TABLE BASKET(
+	BASKET_NUM 			INT,
+	BASKET_MEMBER_ID 	VARCHAR2(20),
+	BASKET_GOODS_NUM 	INT,
+	BASKET_GOODS_AMOUNT INT,
+	BASKET_GOODS_SIZE 	VARCHAR2(20),
+	BASKET_GOODS_COLOR 	VARCHAR2(20),
+	BASKET_DATE 		DATE,
+	PRIMARY KEY(BASKET_NUM)
+);
+
+create sequence basket_no_seq
+increment by 1 start with 1 nocache;
+
+/* 상품주문 테이블 */
+CREATE TABLE GOODS_ORDER(
+	ORDER_NUM 				INT,
+	ORDER_TRADE_NUM 		VARCHAR2(50),
+	ORDER_TRANS_NUM 		VARCHAR2(50),
+	ORDER_GOODS_NUM			INT,
+	ORDER_GOODS_NAME 		VARCHAR2(50),
+	ORDER_GOODS_AMOUNT 		INT,
+	ORDER_GOODS_SIZE 		VARCHAR2(20),
+	ORDER_GOODS_COLOR 		VARCHAR2(20),
+	ORDER_MEMBER_ID 		VARCHAR2(20),
+	ORDER_RECEIVE_NAME 		VARCHAR2(20),
+	ORDER_RECEIVE_ADDR1 	VARCHAR2(70),
+	ORDER_RECEIVE_ADDR2 	VARCHAR2(70),
+	ORDER_RECEIVE_PHONE 	VARCHAR2(13),
+	ORDER_RECEIVE_MOBILE	 VARCHAR2(13),
+	ORDER_MEMO 				VARCHAR2(3000),
+	ORDER_SUM_MONEY 		INT,
+	ORDER_TRADE_TYPE 		VARCHAR2(20),
+	ORDER_TRADE_DATE 		DATE,
+	ORDER_TRADE_PAYER 		VARCHAR2(20),
+	ORDER_DATE 				DATE,
+	ORDER_STATUS 			INT,
+	PRIMARY KEY(ORDER_NUM)
+);
+
+create sequence goodsorder_no_seq
+increment by 1 start with 1 nocache; 

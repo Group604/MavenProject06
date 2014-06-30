@@ -5,8 +5,15 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
    <mapper namespace="Goods">
-   
+   <select id="item_list" parameterType="goods" resultType="goods">
+select * from (
+    select goods_num, goods_category,goods_name, goods_content,goods_price,goods_image,goods_best,goods_date,
+     rownum r from goods
+     where goods_date>=goods_date -7
+     order by goods_num desc )
+    where r &gt; #{startrow} and r &lt; #{endrow}
+
+   </select>
     
    </mapper>
-    
-    
+  
