@@ -336,19 +336,17 @@ public class MemberAction {
 			out.println("location='MemberLogin.do'");
 			out.println("</script>");
 		} else {
+			session.setAttribute("admin_id", id); //
 			if(isAdm){
 				out.println("<script>");
 				out.println("alert('관리자 화면으로 이동합니다!')");
 				out.println("location='AdminGoodsList.do'");
 				out.println("</script>");
-				
-//				return "location='AdminGoodsList.do'";
 			}else{
 				out.println("<script>");
 				out.println("alert('사용자화면으로 이동합니다!')");
 				out.println("location='GoodsList.do?item=new_item'");
 				out.println("</script>");
-/*				return "location='GoodsList.do?item=new_item'";*/
 			}
 		}
 	 return null;

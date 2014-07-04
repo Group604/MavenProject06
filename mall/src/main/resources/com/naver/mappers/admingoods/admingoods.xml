@@ -6,10 +6,39 @@
    
    <mapper namespace="AdminGoods">
    
-    <!-- 상품 조회 -->
+    <!-- 관리자 상품 조회 -->
     <select id="goods_list" resultType="admingoods">
-    	select * from goods
+    	select * from goods order by goods_num
     </select>
+    
+    <!-- 상품등록 -->
+    <insert id="goods_insert" parameterType="admingoods">
+      insert into goods(goods_num,goods_category,goods_name,goods_content,goods_size,goods_color,goods_amount,
+                        goods_price,goods_image,goods_best,goods_date)
+	     values(goods_no_seq.nextval,#{goods_category},#{goods_name},#{goods_content},#{goods_size},#{goods_color},
+	            #{goods_amount},#{goods_price},#{goods_image},#{goods_best},sysdate)
+	              
+    </insert>
+    
+    <!-- 상품정보 가져오기 -->
+    <select id="goods_cont" parameterType="int" resultType="admingoods">
+    	select * from goods where goods_num=#{goods_num}
+    </select>
+    
+    <!-- 상품수정 -->
+    <update id="goods_update" parameterType="admingoods">
+      update goods
+         set goods_category=#{goods_category},
+             goods_name=#{goods_name},
+             goods_content=#{goods_content},
+             goods_size=#{goods_size},
+             goods_color=#{goods_color},
+             goods_amount=#{goods_amount},
+             goods_price=#{goods_price},
+             goods_image=#{goods_image},
+             goods_best=#{goods_best}
+       where goods_num=#{goods_num}
+    </update>
    </mapper>
     
     

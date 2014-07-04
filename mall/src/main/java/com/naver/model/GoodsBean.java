@@ -1,151 +1,161 @@
 package com.naver.model;
 
+import java.util.List;
+
 public class GoodsBean {
-	private int GOODS_NUM;
-	private String GOODS_CATEGORY;
-	private String GOODS_NAME;
-	private String GOODS_CONTENT;
-	private String GOODS_SIZE;
-	private String GOODS_COLOR;
-	private String GOODS_IMAGE;
-	private int GOODS_AMOUNT;
-	private int GOODS_PRICE;
-	private int GOODS_BEST;
+	private int goods_num;
+	private String goods_category;
+	private String goods_name;
+	private String goods_content;
+	private String goods_size;
+	private String goods_color;
+	private String goods_image;
+	private int goods_amount;
+	private int goods_price;
+	private int goods_best;
+	private String goods_date;
+	
 	
 	/* 페이징 변수 */
 
 
-	private int startrow;
-	private int endrow;
+	public String getGoods_date() {
+		return goods_date;
+	}
+	public void setGoods_date(String goods_date) {
+		this.goods_date = goods_date;
+	}
+	private int startrow=0;
+	private int endrow=10;
 
 
 	/*검색어 와 검색필드 */
 	private String find_field;
 	private String find_name;
 
+	/*파일 */
+	private List boardFiles = null;
+	private BoardFile file1 = null;
+	private BoardFile file2 = null;
+	private BoardFile file3 = null;
+	private List file = null;
 	
-	
-	
+	public int getGoods_num() {
+		return goods_num;
+	}
+	public void setGoods_num(int goods_num) {
+		this.goods_num = goods_num;
+	}
+	public String getGoods_category() {
+		return goods_category;
+	}
+	public void setGoods_category(String goods_category) {
+		this.goods_category = goods_category;
+	}
+	public String getGoods_name() {
+		return goods_name;
+	}
+	public void setGoods_name(String goods_name) {
+		this.goods_name = goods_name;
+	}
+	public String getGoods_content() {
+		return goods_content;
+	}
+	public void setGoods_content(String goods_content) {
+		this.goods_content = goods_content;
+	}
+	public String getGoods_size() {
+		return goods_size;
+	}
+	public void setGoods_size(String goods_size) {
+		this.goods_size = goods_size;
+	}
+	public String getGoods_color() {
+		return goods_color;
+	}
+	public void setGoods_color(String goods_color) {
+		this.goods_color = goods_color;
+	}
+	public String getGoods_image() {
+		return goods_image;
+	}
+	public void setGoods_image(String goods_image) {
+		this.goods_image = goods_image;
+	}
+	public int getGoods_amount() {
+		return goods_amount;
+	}
+	public void setGoods_amount(int goods_amount) {
+		this.goods_amount = goods_amount;
+	}
+	public int getGoods_price() {
+		return goods_price;
+	}
+	public void setGoods_price(int goods_price) {
+		this.goods_price = goods_price;
+	}
+	public int getGoods_best() {
+		return goods_best;
+	}
+	public void setGoods_best(int goods_best) {
+		this.goods_best = goods_best;
+	}
 	public int getStartrow() {
 		return startrow;
 	}
-
 	public void setStartrow(int startrow) {
 		this.startrow = startrow;
 	}
-
 	public int getEndrow() {
 		return endrow;
 	}
-
 	public void setEndrow(int endrow) {
 		this.endrow = endrow;
 	}
-
 	public String getFind_field() {
 		return find_field;
 	}
-
 	public void setFind_field(String find_field) {
 		this.find_field = find_field;
 	}
-
 	public String getFind_name() {
 		return find_name;
 	}
-
 	public void setFind_name(String find_name) {
 		this.find_name = find_name;
 	}
-
-	private String GOODS_DATE;
-
-	public int getGOODS_NUM() {
-		return GOODS_NUM;
+	public List getBoardFiles() {
+		return boardFiles;
 	}
-
-	public void setGOODS_NUM(int gOODS_NUM) {
-		GOODS_NUM = gOODS_NUM;
+	public void setBoardFiles(List boardFiles) {
+		this.boardFiles = boardFiles;
 	}
-
-	public String getGOODS_CATEGORY() {
-		return GOODS_CATEGORY;
+	public BoardFile getFile1() {
+		return file1;
 	}
-
-	public void setGOODS_CATEGORY(String gOODS_CATEGORY) {
-		GOODS_CATEGORY = gOODS_CATEGORY;
+	public void setFile1(BoardFile file1) {
+		this.file1 = file1;
 	}
-
-	public String getGOODS_NAME() {
-		return GOODS_NAME;
+	public BoardFile getFile2() {
+		return file2;
 	}
-
-	public void setGOODS_NAME(String gOODS_NAME) {
-		GOODS_NAME = gOODS_NAME;
+	public void setFile2(BoardFile file2) {
+		this.file2 = file2;
 	}
-
-	public String getGOODS_CONTENT() {
-		return GOODS_CONTENT;
+	public BoardFile getFile3() {
+		return file3;
 	}
-
-	public void setGOODS_CONTENT(String gOODS_CONTENT) {
-		GOODS_CONTENT = gOODS_CONTENT;
+	public void setFile3(BoardFile file3) {
+		this.file3 = file3;
 	}
-
-	public String getGOODS_SIZE() {
-		return GOODS_SIZE;
+	public List getFile() {
+		return file;
 	}
-
-	public void setGOODS_SIZE(String gOODS_SIZE) {
-		GOODS_SIZE = gOODS_SIZE;
+	public void setFile(List file) {
+		this.file = file;
 	}
-
-	public String getGOODS_COLOR() {
-		return GOODS_COLOR;
-	}
-
-	public void setGOODS_COLOR(String gOODS_COLOR) {
-		GOODS_COLOR = gOODS_COLOR;
-	}
-
-	public String getGOODS_IMAGE() {
-		return GOODS_IMAGE;
-	}
-
-	public void setGOODS_IMAGE(String gOODS_IMAGE) {
-		GOODS_IMAGE = gOODS_IMAGE;
-	}
-
-	public int getGOODS_AMOUNT() {
-		return GOODS_AMOUNT;
-	}
-
-	public void setGOODS_AMOUNT(int gOODS_AMOUNT) {
-		GOODS_AMOUNT = gOODS_AMOUNT;
-	}
-
-	public int getGOODS_PRICE() {
-		return GOODS_PRICE;
-	}
-
-	public void setGOODS_PRICE(int gOODS_PRICE) {
-		GOODS_PRICE = gOODS_PRICE;
-	}
-
-	public int getGOODS_BEST() {
-		return GOODS_BEST;
-	}
-
-	public void setGOODS_BEST(int gOODS_BEST) {
-		GOODS_BEST = gOODS_BEST;
-	}
-
-	public String getGOODS_DATE() {
-		return GOODS_DATE;
-	}
-
-	public void setGOODS_DATE(String gOODS_DATE) {
-		GOODS_DATE = gOODS_DATE;
-	}
+	
+	
+	
 
 }

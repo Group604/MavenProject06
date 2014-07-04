@@ -17,6 +17,7 @@
   <typeAlias alias="zip2" type="com.naver.model.ZipcodeBean2"/>
   <typeAlias alias="zipcode" type="com.naver.model.NewzipcodeBean"/>
   <typeAlias alias="phonemail" type="com.naver.model.PhoneMailBean"/>
+  <typeAlias alias="category" type="com.naver.model.CategoryBean"/>
   
   </typeAliases>     
 </configuration>

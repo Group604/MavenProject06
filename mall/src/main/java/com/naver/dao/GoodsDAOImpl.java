@@ -14,7 +14,9 @@ public class GoodsDAOImpl implements GoodsDAO{
 		this.sqlSession = sqlSession;
 	}//setter DI
 
-	public List<GoodsBean> getItemList(String item) {
-		return sqlSession.selectList("Goods.item_list", item);
+	public List<GoodsBean> getItemList(GoodsBean gb) {
+		return sqlSession.selectList("Goods.item_list", gb);
 	}
+	
+
 }

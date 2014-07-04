@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <title>쇼핑몰</title>
@@ -11,8 +12,7 @@
 <td colspan=2>
 <!-- 상품 등록 -->
 <table border="0" width="80%">
-<form name="goodsform" action="./GoodsAddOk.ag" method="post"
-	enctype="multipart/form-data">
+<form name="goodsform" action="AdminGoodsAddOk.do" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="goods_best" value="0">
 	<tr> 
 		<td>
@@ -31,13 +31,16 @@
 				</p>
 			</td>
 			<td width="346" height="30">
-				<select name="goods_category" size="1">
-					<option value="outwear" selected>아웃웨어</option>
+					<select name="goods_category" size="1">
+			         <c:forEach var="ls" items="${clist}">
+			         <option value="${ls.categorydesc}">${ls.categorydesc}</option>
+			        </c:forEach>
+					<!-- <option value="outwear" selected>아웃웨어</option>
 					<option value="fulldress">정장/신사복</option>
 					<option value="Tshirts">티셔츠</option>
 					<option value="shirts">와이셔츠</option>
 					<option value="pants">팬츠</option>
-					<option value="shoes">슈즈</option>
+					<option value="shoes">슈즈</option> -->
 				</select>
 			</td>
 			</tr>
@@ -45,39 +48,38 @@
 			<td>
 				<p align="center"><font size=2>상품이름</font></p>
 			</td>
-			<td><input type="text" name="goods_name"></td>
+			<td><input name="goods_name" id="goods_name" ></td>
 		</tr>
 		<tr>
 			<td>
 				<p align="center"><font size=2>판매가</font></p>
 			</td>
-			<td><input type="text" name="goods_price"></td>
+			<td><input name="goods_price" id="goods_price"></td>
 		</tr>
 		<tr>
 			<td>
 				<p align="center"><font size=2>색깔</font></p>
 			</td>
-			<td><input type="text" name="goods_color"></td>
+			<td><input name="goods_color" id="goods_color"></td>
 		</tr>
 		<tr>
 			<td>
 				<p align="center"><font size=2>수량</font></p>
 			</td>
-			<td><input type="text" name="goods_amount"></td>
+			<td><input name="goods_amount" id="goods_amount"></td>
 		</tr>
 		<tr>
 			<td>
 				<p align="center"><font size=2>사이즈</font></p>
 			</td>
-			<td><input type="text" name="goods_size"></td>
+			<td><input name="goods_size" id="goods_size"></td>
 		</tr>
 		<tr>
 			<td width="196">
 				<p align="center"><font size=2>제품정보</font></p>
 			</td>
 			<td width="346">
-				<textarea 
-				name="goods_content" cols=50 rows=15></textarea>
+				<textarea name="goods_content" id="goods_content" cols=50 rows=15></textarea>
 			</td>
 		</tr>
 		<tr>

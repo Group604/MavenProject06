@@ -6,6 +6,6 @@ import com.naver.model.GoodsBean;
 
 public interface GoodsDAO {
 
-	List<GoodsBean> getItemList(String item);
+	List<GoodsBean> getItemList(GoodsBean gb);
 
 }

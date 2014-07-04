@@ -23,6 +23,8 @@ public class GoodsAction {
 	public String goods_list(HttpServletRequest request, 
 			                 HttpServletResponse response){
 		List<GoodsBean> itemList=null;
+		GoodsBean gb=new GoodsBean();
+		
 		System.out.println("here");
 		int count=1;
 		int page=1;
@@ -34,7 +36,7 @@ public class GoodsAction {
 		String price="";
 		
 		if(request.getParameter("searchprice")==null||request.getParameter("searchprice").equals("")){
-			itemList=this.goodsService.getItemList(item);
+			itemList =this.goodsService.getItemList(gb);
 		}else{
 			price=request.getParameter("searchprice");
 			/*itemList=this.getItemList(item,page,price);

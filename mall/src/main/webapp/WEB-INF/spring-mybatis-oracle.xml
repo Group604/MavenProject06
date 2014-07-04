@@ -26,6 +26,7 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
+	
 	<!-- mybatis ORM DB 연동 프레임웍 연결 -->	
 	
 	<!-- 관리자 상품관리 -->
@@ -62,6 +63,12 @@
     <bean id="phonemailService" class="com.naver.dao.PhoneMailDAOImpl">
     <property name="sqlSession" ref="sqlSession" />
     </bean>
+    
+    <!-- 카테고리 -->
+    <bean id="categoryService" class="com.naver.dao.CategoryDAOImpl">
+    <property name="sqlSession" ref="sqlSession"/>
+    </bean>
+     
 </beans>
 
 

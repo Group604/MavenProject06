@@ -12,11 +12,11 @@
 <title>쇼핑몰</title>
 <script type="text/javascript">
 function goodsdelete(goods_num){
-	document.goodsform.action="./GoodsDelete.ag?goods_num="+goods_num;
+	document.goodsform.action="./AdminGoodsDelete.do?goods_num="+goods_num;
 	document.goodsform.submit();	
 }
 function goodsmodify(goods_num){
-	document.goodsform.action="./GoodsModify.ag?goods_num="+goods_num;
+	document.goodsform.action="./AdminGoodsModify.do?goods_num="+goods_num;
 	document.goodsform.submit();	
 }
 </script>
@@ -39,51 +39,51 @@ function goodsmodify(goods_num){
 				<td>
 				<p align="right">
 					<font size=2>
-						<a href="./GoodsAdd.ag">상품등록</a>
+						<a href="AdminGoodsAdd.do">상품등록</a><%--상품등록 --%>
 					</font>
 				</p>
 				</td>
 			</tr>
+			
+	<c:if test="${!empty list}">
+	<c:forEach var="g" items="${list}">		
+			
+			
 			<tr>
 			<td>
 			<form name=goodsform method="post">
 			<table border="1">
 			<tr>
-				<td width="50">
+				<th width="50">
 				<p align="center"><font size=2>번호</font></p>
-				</td>
-				<td width="141">
+				</th>
+				<th width="141">
 				<p align="center"><font size=2>카테고리</font></p>
-				</td>
-				<td width="100">
+				</th>
+				<th width="100">
 				<p align="center"><font size=2>사진</font></p>
-				</td>
-				<td width="141">
+				</th>
+				<th width="141">
 				<p align="center"><font size=2>상품명</font></p>
-				</td>
-				<td width="141">
+				</th>
+				<th width="141">
 				<p align="center"><font size=2>단가</font></p>
-				</td>
-				<td width="80">
+				</th>
+				<th width="80">
 				<p align="center"><font size=2>수량</font></p>
-				</td>
-				<td width="141">
+				</th>
+				<th width="241">
 				<p align="center"><font size=2>등록일자</font></p>
-				</td>
-				<td width="100">
+				</th>
+				<th width="100">
 				<p align="center"><font size=2>&nbsp;</font></p>
-				</td>
+				</th>
 			</tr>
-			<c:if test="${!empty list}">
-			<c:forEach var="g" items="${list}">
 			
 			
-			</c:forEach>
 			
-<%-- 			<%
-					for (int i = 0; i < list.size(); i++) {
-					agb = (GoodsBean) obj[i];
-			%> --%>
+			
+
 			<tr>
 			
 			
@@ -101,7 +101,7 @@ function goodsmodify(goods_num){
 			</p>
 			</td>
 			<td>
-			<p align="center"><img src="./upload/${g.goods_image.split(",")[0]" width="50" height="50" border="0"></p>
+			<p align="center"><img src="./upload/${g.goods_image}" width="50" height="50" border="0"></p>
 			</td>
 			<td>
 			<p align="center">
@@ -136,9 +136,8 @@ function goodsmodify(goods_num){
 			</p>
 			</td>
 			</tr>
-
-				}
 			</table>
+			</c:forEach>
 			</td>
 			</tr>
 			</c:if>
