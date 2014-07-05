@@ -13,7 +13,7 @@
 			/AdminGoodsList.do=admingoodsAction
 			/AdminGoodsAdd.do=admingoodsAction
 			/AdminGoodsAddOk.do=admingoodsAction
-			/AdminGoodsDelete.do=admingoodsAction
+			/AdminGoodsDel.do=admingoodsAction
 			/AdminGoodsDeleteOk.do=admingoodsAction
 			/AdminGoodsModify.do=admingoodsAction
 			/AdminGoodsModifyOk.do=admingoodsAction

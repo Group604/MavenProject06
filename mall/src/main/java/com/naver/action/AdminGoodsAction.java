@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.naver.dao.AdminGoodsDAO;
 import com.naver.dao.CategoryDAO;
@@ -217,7 +216,7 @@ public class AdminGoodsAction {
 	
 	/* 관리자 상품수정 완료 */
 	@RequestMapping(value="/AdminGoodsModifyOk")
-	public String AdminGoodsEditOk(
+	public String adminGoodsModifyOk(
 			                  HttpServletRequest request, 
 			                  @ModelAttribute GoodsBean b,
 			                  HttpServletResponse response,
@@ -333,6 +332,34 @@ System.out.println("------------------");
   return null;
 	}
 
+	/* 상품 삭제 */
+	@RequestMapping(value="AdminGoodsDel")
+	public String adminGoodsDelete(HttpServletRequest request,
+			HttpServletResponse response){
+		
+		int goods_num=Integer.parseInt(request.getParameter("goods_num"));
+		
+		request.setAttribute("goods_num", goods_num);
+		return "admingoods/admin_goods_delete";
+	}
+	
+	
+	/* 관리자 상품수정 완료 */
+	@RequestMapping(value="/AdminGoodsDeleteOk")
+	public String adminGoodsDeleteOk(
+			                  HttpServletRequest request, 
+			                  @ModelAttribute GoodsBean b,
+			                  HttpServletResponse response,
+			                  HttpSession session)
+	 throws Exception{
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		session = request.getSession();
+
+		String admin_id = (String) session.getAttribute("admin_id");
+
+		return "admingoods/admin_goods_delete";
+	}
 
 }
 

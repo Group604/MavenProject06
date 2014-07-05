@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
-<%
-	int num=Integer.parseInt(request.getParameter("goods_num"));
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <title>상품 삭제</title>
 </head>
 <body>
-<form name="deleteForm" action="./GoodsDeleteOk.ag?goods_num=<%=num %>" 
-	method="post">
+<form name="deleteForm" action="AdminGoodsDeleteOk.do?goods_num=${goods_num}" method="post">
 <table border=1>
 <tr>
 	<td>

@@ -11,12 +11,12 @@
 <head>
 <title>쇼핑몰</title>
 <script type="text/javascript">
-function goodsdelete(goods_num){
-	document.goodsform.action="./AdminGoodsDelete.do?goods_num="+goods_num;
-	document.goodsform.submit();	
-}
 function goodsmodify(goods_num){
 	document.goodsform.action="./AdminGoodsModify.do?goods_num="+goods_num;
+	document.goodsform.submit();	
+}
+function admingoodsdelete(goods_num){
+	document.goodsform.action="./AdminGoodsDel.do?goods_num="+goods_num;
 	document.goodsform.submit();	
 }
 </script>
@@ -127,12 +127,8 @@ function goodsmodify(goods_num){
 			</td>
 			<td>
 			<p align="center">
-			<a href="javascript:goodsmodify(${g.goods_num});">
-				<font size=2>수정</font>
-			</a>/
-			<a href="javascript:goodsdelete(${g.goods_num});">
-				<font size=2>삭제</font>
-			</a>
+			<a href="javascript:admingoodsdelete(${g.goods_num});"><font size=2>삭제</font></a>/
+			<a href="javascript:goodsmodify(${g.goods_num});"><font size=2>수정</font></a>
 			</p>
 			</td>
 			</tr>
