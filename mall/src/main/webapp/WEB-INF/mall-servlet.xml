@@ -13,10 +13,11 @@
 			/AdminGoodsList.do=admingoodsAction
 			/AdminGoodsAdd.do=admingoodsAction
 			/AdminGoodsAddOk.do=admingoodsAction
-			/AdminGoodsDel.do=admingoodsAction
+			/AdminGoodsDelete.do=admingoodsAction
 			/AdminGoodsDeleteOk.do=admingoodsAction
 			/AdminGoodsModify.do=admingoodsAction
 			/AdminGoodsModifyOk.do=admingoodsAction
+			/AdminGoodsContent.do=admingoodsAction
 			
 			
 			<!-- 장바구니 -->

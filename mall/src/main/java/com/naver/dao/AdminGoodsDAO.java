@@ -13,5 +13,7 @@ public interface AdminGoodsDAO {
 	GoodsBean getGoodsCont(int goods_num);//상품정보 가져오기
 
 	int updateGoods(GoodsBean b);//상품수정
+
+	int delGoods(int goods_num);//상품삭제
 	
 }

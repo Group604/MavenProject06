@@ -33,6 +33,11 @@ public class AdminGoodsDAOImpl implements AdminGoodsDAO{
 		return this.sqlSession.update("AdminGoods.goods_update", b);
 	}
 
+	//상품 삭제
+	public int delGoods(int goods_num) {
+		return this.sqlSession.delete("AdminGoods.goods_delete", goods_num);
+	}
+
 		
 	
 }

@@ -87,3 +87,4 @@ CREATE TABLE GOODS_ORDER(
 create sequence goodsorder_no_seq
 increment by 1 start with 1 nocache;
 
+alter table goods add goods_inuse int default 0;

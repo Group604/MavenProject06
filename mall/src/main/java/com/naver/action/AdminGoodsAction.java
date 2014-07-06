@@ -13,12 +13,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.naver.dao.AdminGoodsDAO;
 import com.naver.dao.CategoryDAO;
 import com.naver.dao.MemberDAO;
 import com.naver.model.CategoryBean;
 import com.naver.model.GoodsBean;
+import com.naver.model.MemberBean;
 import com.oreilly.servlet.MultipartRequest;
 
 @Controller
@@ -333,14 +336,14 @@ System.out.println("------------------");
 	}
 
 	/* 상품 삭제 */
-	@RequestMapping(value="AdminGoodsDel")
+	@RequestMapping(value="/AdminGoodsDelete")
 	public String adminGoodsDelete(HttpServletRequest request,
 			HttpServletResponse response){
 		
 		int goods_num=Integer.parseInt(request.getParameter("goods_num"));
 		
 		request.setAttribute("goods_num", goods_num);
-		return "admingoods/admin_goods_delete";
+		return "/AdminGoodsDeleteOk";
 	}
 	
 	
@@ -350,15 +353,90 @@ System.out.println("------------------");
 			                  HttpServletRequest request, 
 			                  @ModelAttribute GoodsBean b,
 			                  HttpServletResponse response,
-			                  HttpSession session)
+			                  HttpSession session,
+			                  @RequestParam("goods_num") int goods_num,
+			      			  @RequestParam("page") int page,
+			      			  @RequestParam("Admin_pass") String del_pwd,
+			      			  @ModelAttribute MemberBean admin_pwd
+			                  )
 	 throws Exception{
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		session = request.getSession();
 
-		String admin_id = (String) session.getAttribute("admin_id");
+		String admin_id = (String) session.getAttribute("admin_id");       
 
-		return "admingoods/admin_goods_delete";
+		if(admin_id==null){
+			out.println("<script>");
+			out.println("alert('다시 로그인 하세요!')");
+			out.println("location='/MemberLogin.do'");
+			out.println("</script>");
+		}else{
+			admin_pwd.setMember_id(admin_id);
+			admin_pwd=this.memberService.findId(admin_pwd);
+			//디비로 부터 비번을 가져옴.
+			if(admin_pwd.equals(del_pwd)){
+				out.println("<script>");
+				out.println("alert('비번이 다릅니다!')");
+				out.println("history.back()");
+				out.println("</script>");
+			}else{
+				if(this.admingoodsService.delGoods(goods_num)>0){//상품삭제
+				return "redirect:/admin_board_list.do?page="+page;
+				}
+			}
+		}
+		return null;
+	}
+
+	/* 상품 내용보기+수정폼+삭제폼 */
+	@RequestMapping(value = "/AdminGoodsContent")
+	public ModelAndView adminGoodsContent(
+			@RequestParam("goods_num") int goods_no,
+			@RequestParam("state") String state, 
+			HttpSession session,
+			HttpServletRequest request, 
+			HttpServletResponse response) throws Exception {
+		
+		System.out.println("!!!");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		session = request.getSession();
+		String admin_id = (String) session.getAttribute("admin_id");
+		
+		if (admin_id == null) {
+			out.println("<script>");
+			out.println("alert('다시 로그인 하세요!')");
+			out.println("location='MemberLogin.do'");
+			out.println("</script>");
+		} else {
+			int page = 1;
+			if (request.getParameter("page") != null) {
+				page = Integer.parseInt(request.getParameter("page"));
+			}
+
+			GoodsBean gb = this.admingoodsService.getGoodsCont(goods_no);
+			String goods_cont = gb.getGoods_content().replace("\n", "<br/>");
+			// textarea박스에서 엔터키 친부분을 다음줄로 개행
+
+			ModelAndView cm = new ModelAndView();//뷰생성
+			cm.addObject("gb", gb);//gb set
+			cm.addObject("goods_cont", goods_cont);
+			cm.addObject("page", page);
+
+
+			if (state.equals("cont")) {
+				cm.setViewName("admingoods/admin_goods_content");
+			}
+			if (state.equals("edit")) {
+				cm.setViewName("admingoods/admin_goods_modify");
+			}
+			if (state.equals("del")) {
+				cm.setViewName("admingoods/admin_goods_delete");
+			}
+			return cm;
+		}
+		return null;
 	}
 
 }

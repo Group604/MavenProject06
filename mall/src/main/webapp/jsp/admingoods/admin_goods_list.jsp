@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- <%
 	Collection list = (Collection) request.getAttribute("list");
@@ -16,9 +15,14 @@ function goodsmodify(goods_num){
 	document.goodsform.submit();	
 }
 function admingoodsdelete(goods_num){
-	document.goodsform.action="./AdminGoodsDel.do?goods_num="+goods_num;
+	document.goodsform.action="./AdminGoodsDelete.do?goods_num="+goods_num;
 	document.goodsform.submit();	
 }
+function admingoodsContent(goods_num){
+	document.goodsform.action="./AdminGoodsContent.do?goods_num="+goods_num;
+	document.goodsform.submit();	
+}
+
 </script>
 </head>
 <body>
@@ -105,7 +109,7 @@ function admingoodsdelete(goods_num){
 			</td>
 			<td>
 			<p align="center">
-			   ${g.goods_name}
+			<a href="javascript:admingoodsContent(${g.goods_num});"><font size=2> ${g.goods_name}</font></a>
 			</p>
 			</td>
 			<td>
