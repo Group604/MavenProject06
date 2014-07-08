@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao
+END
+PhoneMailDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/PhoneMailDAO.java
+END
+PhoneMailDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/PhoneMailDAOImpl.java
+END
+BasketDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/BasketDAO.java
+END
+BasketDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/BasketDAOImpl.java
+END
+AdminGoodsDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/AdminGoodsDAO.java
+END
+AdminGoodsDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/AdminGoodsDAOImpl.java
+END
+OrderDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/OrderDAO.java
+END
+OrderDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/OrderDAOImpl.java
+END
+ZipcodeDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/ZipcodeDAO.java
+END
+ZipcodeDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/ZipcodeDAOImpl.java
+END
+GoodsDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/GoodsDAO.java
+END
+GoodsDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/GoodsDAOImpl.java
+END
+MemberDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/MemberDAO.java
+END
+MemberDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/MemberDAOImpl.java
+END
+CategoryDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/CategoryDAO.java
+END
+CategoryDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/dao/CategoryDAOImpl.java
+END

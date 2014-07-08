@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/mallp/!svn/ver/7/mall
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/mallp/!svn/ver/8/mall/.gitignore
+END
+pom.xml
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/mallp/!svn/ver/8/mall/pom.xml
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/mallp/!svn/ver/8/mall/.project
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/mallp/!svn/ver/8/mall/.classpath
+END

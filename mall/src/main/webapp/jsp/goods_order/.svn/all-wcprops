@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/goods_order
+END
+goods_buy.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/goods_order/goods_buy.jsp
+END
+goods_basket.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/goods_order/goods_basket.jsp
+END
+goods_my_order.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/goods_order/goods_my_order.jsp
+END
+goods_order_ok.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/goods_order/goods_order_ok.jsp
+END

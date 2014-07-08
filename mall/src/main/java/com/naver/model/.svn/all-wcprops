@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model
+END
+CategoryBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model/CategoryBean.java
+END
+NewzipcodeBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model/NewzipcodeBean.java
+END
+OrderBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model/OrderBean.java
+END
+ZipcodeBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model/ZipcodeBean.java
+END
+MemberBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model/MemberBean.java
+END
+BasketBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model/BasketBean.java
+END
+GoodsBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model/GoodsBean.java
+END
+PhoneMailBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model/PhoneMailBean.java
+END
+ZipcodeBean2.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model/ZipcodeBean2.java
+END
+BoardFile.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mallp/!svn/ver/8/mall/src/main/java/com/naver/model/BoardFile.java
+END

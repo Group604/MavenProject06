@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/bbs
+END
+bbs_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/bbs/bbs_list.jsp
+END
+bbs_cont.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/bbs/bbs_cont.jsp
+END
+bbs_reply.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/bbs/bbs_reply.jsp
+END
+bbs_del.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/bbs/bbs_del.jsp
+END
+bbs_write.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/bbs/bbs_write.jsp
+END
+bbs_edit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/bbs/bbs_edit.jsp
+END

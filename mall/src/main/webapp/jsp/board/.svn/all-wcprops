@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/board
+END
+board_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/board/board_list.jsp
+END
+board_cont.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/board/board_cont.jsp
+END
+board_reply.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/board/board_reply.jsp
+END
+board_del.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/board/board_del.jsp
+END
+board_edit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/board/board_edit.jsp
+END
+board_write.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/mallp/!svn/ver/8/mall/src/main/webapp/jsp/board/board_write.jsp
+END
