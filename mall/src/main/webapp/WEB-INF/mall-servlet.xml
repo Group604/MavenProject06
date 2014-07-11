@@ -61,7 +61,10 @@
 			/OrderStart.do=orderAction
 			/OrderList.do=orderAction
 			/OrderAdd.do=orderAction
-
+			
+			<!-- 공지 -->
+			/Gondji.do=gongjiAction
+			
 			</value>
 		</property>
 	</bean>
